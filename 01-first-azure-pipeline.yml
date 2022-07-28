@@ -27,4 +27,10 @@ jobs:
     dependsOn: Job2
     steps:
       - script: echo Job3
+  - job : Job4
+    dependsOn:
+    - Job2
+    - Job3
+    steps:
+      - script: echo Job4
 
