@@ -21,7 +21,6 @@ stages:
       - bash: node --version      
       - bash: python --version
       - bash: mvn --version
-      - bash: echo ***** BEFORE COPY *****
       - bash: echo ls -R $(Build.ArtifactStagingDirectory)
       - task: CopyFiles@2
         inputs:
@@ -30,8 +29,12 @@ stages:
             **/*.yaml
             **/*.tf
           TargetFolder: '$(Build.ArtifactStagingDirectory)'
-      - bash: echo ***** AFTER COPY *****
       - bash: echo ls -R $(Build.ArtifactStagingDirectory)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
     # - job : SecondJob
     #   steps:
     #   - bash : echo Build SecondJob
